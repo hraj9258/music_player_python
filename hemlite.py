@@ -1,3 +1,4 @@
+import os
 from tkinter import *
 import tkinter.messagebox
 from tkinter import filedialog
@@ -47,7 +48,7 @@ def play_music():
     try:
         mixer.music.load(filename)
         mixer.music.play()
-        statusbar["text"] = "Playing Music"
+        statusbar["text"] = "Playing Music"+" | "+os.path.basename(filename)
     except:
         tkinter.messagebox.showerror(
             "File not Found", "Could not find a file ! Please cheack again.")
