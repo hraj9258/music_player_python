@@ -22,6 +22,9 @@ def play_music():
 def stop_music():
     mixer.music.stop()
 
+def set_vol(val):
+    volume = int(val) / 100
+    mixer.music.set_volume(volume)
 
 playPhoto = PhotoImage(file = "play.png")
 playBtn = Button(root, image = playPhoto, command = play_music)
@@ -31,5 +34,7 @@ stopPhoto = PhotoImage(file = "stop.png")
 stopBtn = Button(root, image = stopPhoto, command = stop_music)
 stopBtn.pack()
 
+scale = Scale(root, from_=0, to=100, orient = HORIZONTAL, command = set_vol)
+scale.pack()
 
 root.mainloop()
