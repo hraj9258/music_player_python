@@ -37,6 +37,7 @@ stopBtn.pack()
 
 scale = Scale(root, from_=0, to=100, orient = HORIZONTAL, command = set_vol)
 scale.set(75) #set default volume
+mixer.music.set_volume(75)
 scale.pack()
 
 root.mainloop()
