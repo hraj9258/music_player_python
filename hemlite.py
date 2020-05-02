@@ -46,13 +46,26 @@ text.pack()
 
 def play_music():
     try:
-        mixer.music.load(filename)
-        mixer.music.play()
-        statusbar["text"] = "Playing Music"+" | "+os.path.basename(filename)
-    except:
-        tkinter.messagebox.showerror(
-            "File not Found", "Could not find a file ! Please cheack again.")
+        paused #check if "paused" is initlised pr not
+    except NameError: #if not initlised then run the following code
+        try:
+            mixer.music.load(filename)
+            mixer.music.play()
+            statusbar["text"] = "Playing Music"+" | "+os.path.basename(filename)
+        except:
+            tkinter.messagebox.showerror(
+                "File not Found", "Could not find a file ! Please cheack again.")
+    else: #if initilised then continue
+        mixer.music.unpause()
+        statusbar["text"] = "Resumed Music"+" | "+os.path.basename(filename)
 
+
+
+def pause_music():
+    global paused
+    paused = TRUE
+    mixer.music.pause()
+    statusbar["text"] = "Paused Music"+" | "+os.path.basename(filename)
 
 def stop_music():
     mixer.music.stop()
@@ -67,6 +80,10 @@ def set_vol(val):
 playPhoto = PhotoImage(file="play.png")
 playBtn = Button(root, image=playPhoto, command=play_music)
 playBtn.pack()
+
+pausePhoto = PhotoImage(file="paused.png")
+pauseBtn = Button(root, image=pausePhoto, command=pause_music)
+pauseBtn.pack()
 
 stopPhoto = PhotoImage(file="stop.png")
 stopBtn = Button(root, image=stopPhoto, command=stop_music)
