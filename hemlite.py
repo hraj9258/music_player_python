@@ -13,13 +13,23 @@ root.iconbitmap(r"icon.ico")
 text=Label(root,text="Lets! Make some noise.")
 text.pack()
 
+
 def play_music():
     mixer.music.load("tiger.mp3")
     mixer.music.play()
-    print("Play button works very well!")
 
-playPhoto = PhotoImage(file = "play_2.png")
+
+def stop_music():
+    mixer.music.stop()
+
+
+playPhoto = PhotoImage(file = "play.png")
 playBtn = Button(root, image = playPhoto, command = play_music)
 playBtn.pack()
+
+stopPhoto = PhotoImage(file = "stop.png")
+stopBtn = Button(root, image = stopPhoto, command = stop_music)
+stopBtn.pack()
+
 
 root.mainloop()
