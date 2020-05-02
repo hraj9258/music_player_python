@@ -26,6 +26,7 @@ def set_vol(val):
     volume = int(val) / 100
     mixer.music.set_volume(volume)
 
+
 playPhoto = PhotoImage(file = "play.png")
 playBtn = Button(root, image = playPhoto, command = play_music)
 playBtn.pack()
@@ -35,6 +36,7 @@ stopBtn = Button(root, image = stopPhoto, command = stop_music)
 stopBtn.pack()
 
 scale = Scale(root, from_=0, to=100, orient = HORIZONTAL, command = set_vol)
+scale.set(75) #set default volume
 scale.pack()
 
 root.mainloop()
