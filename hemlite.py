@@ -1,5 +1,6 @@
 from tkinter import *
 import tkinter.messagebox
+from tkinter import filedialog
 from pygame import mixer
 
 
@@ -10,9 +11,15 @@ menubar=Menu(root)
 root.config(menu=menubar)
 
 #submenu
+
+def browse_file():
+    global filename
+    filename = filedialog.askopenfilename()
+    print(filename)
+
 submenu = Menu(menubar,tearoff=0)
 menubar.add_cascade(label="File",menu=submenu)
-submenu.add_command(label="Open")
+submenu.add_command(label="Open", command = browse_file)
 submenu.add_command(label="Exit", command = root.destroy)
 
 def about_us():
@@ -33,8 +40,11 @@ text.pack()
 
 
 def play_music():
-    mixer.music.load("tiger.mp3")
-    mixer.music.play()
+    try:
+        mixer.music.load(filename)
+        mixer.music.play()
+    except:
+        tkinter.messagebox.showerror("File not Found","Could not find a file ! Please cheack again.")
 
 
 def stop_music():
