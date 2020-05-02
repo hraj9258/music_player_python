@@ -4,6 +4,21 @@ from pygame import mixer
 
 root = Tk()
 
+#menubar
+menubar=Menu(root)
+root.config(menu=menubar)
+
+#submenu
+submenu = Menu(menubar,tearoff=0)
+menubar.add_cascade(label="File",menu=submenu)
+submenu.add_command(label="Open")
+submenu.add_command(label="Exit")
+
+submenu = Menu(menubar,tearoff=0)
+menubar.add_cascade(label="Help",menu=submenu)
+submenu.add_command(label="About us")
+
+
 mixer.init()#initializing the mixer
 
 root.geometry("300x300")
