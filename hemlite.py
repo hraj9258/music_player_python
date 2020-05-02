@@ -47,6 +47,7 @@ def play_music():
     try:
         mixer.music.load(filename)
         mixer.music.play()
+        statusbar["text"] = "Playing Music"
     except:
         tkinter.messagebox.showerror(
             "File not Found", "Could not find a file ! Please cheack again.")
@@ -54,6 +55,7 @@ def play_music():
 
 def stop_music():
     mixer.music.stop()
+    statusbar["text"] = "Stoped Music"
 
 
 def set_vol(val):
@@ -73,5 +75,8 @@ scale = Scale(root, from_=0, to=100, orient=HORIZONTAL, command=set_vol)
 scale.set(75)  # set default volume
 mixer.music.set_volume(0.7)
 scale.pack()
+
+statusbar = Label(root,text="Welcome! to hemlite music Player",relief=SUNKEN, anchor=W)
+statusbar.pack(side=BOTTOM,fill=X)
 
 root.mainloop()
