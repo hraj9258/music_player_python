@@ -1,4 +1,5 @@
 from tkinter import *
+import tkinter.messagebox
 from pygame import mixer
 
 
@@ -12,12 +13,14 @@ root.config(menu=menubar)
 submenu = Menu(menubar,tearoff=0)
 menubar.add_cascade(label="File",menu=submenu)
 submenu.add_command(label="Open")
-submenu.add_command(label="Exit")
+submenu.add_command(label="Exit", command = root.destroy)
+
+def about_us():
+    tkinter.messagebox.showinfo("Hemlite Music Player","This is a Music Player(WIP) written in python, based on tkinter and pygame librari \nBy:hraj9258")
 
 submenu = Menu(menubar,tearoff=0)
 menubar.add_cascade(label="Help",menu=submenu)
-submenu.add_command(label="About us")
-
+submenu.add_command(label="About us", command = about_us)
 
 mixer.init()#initializing the mixer
 
@@ -52,7 +55,7 @@ stopBtn.pack()
 
 scale = Scale(root, from_=0, to=100, orient = HORIZONTAL, command = set_vol)
 scale.set(75) #set default volume
-mixer.music.set_volume(75)
+mixer.music.set_volume(0.7)
 scale.pack()
 
 root.mainloop()
