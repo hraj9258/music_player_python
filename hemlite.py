@@ -86,7 +86,7 @@ def set_vol(val):
 
 
 midframe=Frame(root)
-midframe.pack(pady=10)
+midframe.pack(pady=30,padx=30)
 
 playPhoto = PhotoImage(file="play.png")
 playBtn = Button(midframe, image=playPhoto, command=play_music)
