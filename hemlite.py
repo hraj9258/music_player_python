@@ -59,6 +59,15 @@ def play_music():
         statusbar["text"] = "Resumed Music"+" | "+os.path.basename(filename)
 
 
+def rewind_music():
+    try:
+        mixer.music.load(filename)
+        mixer.music.play()
+        statusbar["text"] = "Restarted Music"+" | "+os.path.basename(filename)
+    except:
+        tkinter.messagebox.showerror(
+            "File not Found", "Could not find a file ! Please cheack again.")
+
 
 def pause_music():
     global paused
@@ -90,6 +99,10 @@ pauseBtn.grid(row=0,column=1, padx=10)
 stopPhoto = PhotoImage(file="stop.png")
 stopBtn = Button(midframe, image=stopPhoto, command=stop_music)
 stopBtn.grid(row=0,column=2, padx=10)
+
+rewindPhoto = PhotoImage(file="rewind.png")
+rewindBtn = Button(root, image=rewindPhoto, command=rewind_music)
+rewindBtn.pack()
 
 scale = Scale(root, from_=0, to=100, orient=HORIZONTAL, command=set_vol)
 scale.set(75)  # set default volume
