@@ -36,7 +36,6 @@ submenu.add_command(label="About us", command=about_us)
 
 mixer.init()  # initializing the mixer
 
-root.geometry("300x300")
 root.title("Melody")
 root.iconbitmap(r"icon.ico")
 
@@ -77,17 +76,20 @@ def set_vol(val):
     mixer.music.set_volume(volume)
 
 
+midframe=Frame(root)
+midframe.pack(padx=10,pady=10)
+
 playPhoto = PhotoImage(file="play.png")
-playBtn = Button(root, image=playPhoto, command=play_music)
-playBtn.pack()
+playBtn = Button(midframe, image=playPhoto, command=play_music)
+playBtn.pack(side=LEFT)
 
 pausePhoto = PhotoImage(file="paused.png")
-pauseBtn = Button(root, image=pausePhoto, command=pause_music)
-pauseBtn.pack()
+pauseBtn = Button(midframe, image=pausePhoto, command=pause_music)
+pauseBtn.pack(side=LEFT)
 
 stopPhoto = PhotoImage(file="stop.png")
-stopBtn = Button(root, image=stopPhoto, command=stop_music)
-stopBtn.pack()
+stopBtn = Button(midframe, image=stopPhoto, command=stop_music)
+stopBtn.pack(side=LEFT)
 
 scale = Scale(root, from_=0, to=100, orient=HORIZONTAL, command=set_vol)
 scale.set(75)  # set default volume
