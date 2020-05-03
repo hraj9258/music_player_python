@@ -81,15 +81,15 @@ midframe.pack(padx=10,pady=10)
 
 playPhoto = PhotoImage(file="play.png")
 playBtn = Button(midframe, image=playPhoto, command=play_music)
-playBtn.pack(side=LEFT)
+playBtn.pack(side=LEFT, padx=10)
 
 pausePhoto = PhotoImage(file="paused.png")
 pauseBtn = Button(midframe, image=pausePhoto, command=pause_music)
-pauseBtn.pack(side=LEFT)
+pauseBtn.pack(side=LEFT, padx=10)
 
 stopPhoto = PhotoImage(file="stop.png")
 stopBtn = Button(midframe, image=stopPhoto, command=stop_music)
-stopBtn.pack(side=LEFT)
+stopBtn.pack(side=LEFT, padx=10)
 
 scale = Scale(root, from_=0, to=100, orient=HORIZONTAL, command=set_vol)
 scale.set(75)  # set default volume
