@@ -100,14 +100,17 @@ stopPhoto = PhotoImage(file="stop.png")
 stopBtn = Button(midframe, image=stopPhoto, command=stop_music)
 stopBtn.grid(row=0,column=2, padx=10)
 
-rewindPhoto = PhotoImage(file="rewind.png")
-rewindBtn = Button(root, image=rewindPhoto, command=rewind_music)
-rewindBtn.pack()
+bottomframe=Frame(root)
+bottomframe.pack(pady=10)
 
-scale = Scale(root, from_=0, to=100, orient=HORIZONTAL, command=set_vol)
+rewindPhoto = PhotoImage(file="rewind.png")
+rewindBtn = Button(bottomframe, image=rewindPhoto, command=rewind_music)
+rewindBtn.grid(row=0,column=0)
+
+scale = Scale(bottomframe, from_=0, to=100, orient=HORIZONTAL, command=set_vol)
 scale.set(75)  # set default volume
 mixer.music.set_volume(0.7)
-scale.pack()
+scale.grid(row=0,column=1,padx=30,pady=10)
 
 statusbar = Label(root,text="Welcome! to hemlite music Player",relief=SUNKEN, anchor=W)
 statusbar.pack(side=BOTTOM,fill=X)
