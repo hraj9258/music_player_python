@@ -77,19 +77,19 @@ def set_vol(val):
 
 
 midframe=Frame(root)
-midframe.pack(padx=10,pady=10)
+midframe.pack(pady=10)
 
 playPhoto = PhotoImage(file="play.png")
 playBtn = Button(midframe, image=playPhoto, command=play_music)
-playBtn.pack(side=LEFT, padx=10)
+playBtn.grid(row=0,column=0, padx=10)
 
 pausePhoto = PhotoImage(file="paused.png")
 pauseBtn = Button(midframe, image=pausePhoto, command=pause_music)
-pauseBtn.pack(side=LEFT, padx=10)
+pauseBtn.grid(row=0,column=1, padx=10)
 
 stopPhoto = PhotoImage(file="stop.png")
 stopBtn = Button(midframe, image=stopPhoto, command=stop_music)
-stopBtn.pack(side=LEFT, padx=10)
+stopBtn.grid(row=0,column=2, padx=10)
 
 scale = Scale(root, from_=0, to=100, orient=HORIZONTAL, command=set_vol)
 scale.set(75)  # set default volume
