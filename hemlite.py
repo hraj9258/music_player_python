@@ -84,6 +84,20 @@ def set_vol(val):
     volume = int(val) / 100
     mixer.music.set_volume(volume)
 
+muted=FALSE
+
+def mute_music():
+    global muted
+    if muted:
+        mixer.music.set_volume(0.75)
+        volumeBtn.configure(image=volumePhoto)
+        scale.set(75)
+        muted=FALSE
+    else:
+        mixer.music.set_volume(0)
+        volumeBtn.configure(image=mutePhoto)
+        scale.set(0)
+        muted=TRUE
 
 midframe=Frame(root)
 midframe.pack(pady=30,padx=30)
@@ -100,6 +114,8 @@ stopPhoto = PhotoImage(file="stop.png")
 stopBtn = Button(midframe, image=stopPhoto, command=stop_music)
 stopBtn.grid(row=0,column=2, padx=10)
 
+#bottom frame for rewind, mute and scale
+
 bottomframe=Frame(root)
 bottomframe.pack(pady=10)
 
@@ -107,10 +123,15 @@ rewindPhoto = PhotoImage(file="rewind.png")
 rewindBtn = Button(bottomframe, image=rewindPhoto, command=rewind_music)
 rewindBtn.grid(row=0,column=0)
 
+mutePhoto = PhotoImage(file="mute.png")
+volumePhoto = PhotoImage(file="volume.png")
+volumeBtn = Button(bottomframe, image=volumePhoto, command=mute_music)
+volumeBtn.grid(row=0,column=1,padx=10)
+
 scale = Scale(bottomframe, from_=0, to=100, orient=HORIZONTAL, command=set_vol)
 scale.set(75)  # set default volume
 mixer.music.set_volume(0.7)
-scale.grid(row=0,column=1,padx=30,pady=10)
+scale.grid(row=0,column=2,padx=30,pady=10)
 
 statusbar = Label(root,text="Welcome! to hemlite music Player",relief=SUNKEN, anchor=W)
 statusbar.pack(side=BOTTOM,fill=X)
