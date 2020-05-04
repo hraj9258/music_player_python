@@ -44,9 +44,10 @@ text.pack()
 
 
 def play_music():
-    try:
-        paused #check if "paused" is initlised pr not
-    except NameError: #if not initlised then run the following code
+    if paused:
+        mixer.music.unpause()
+        statusbar["text"] = "Resumed Music"+" | "+os.path.basename(filename)
+    else:
         try:
             mixer.music.load(filename)
             mixer.music.play()
@@ -54,9 +55,6 @@ def play_music():
         except:
             tkinter.messagebox.showerror(
                 "File not Found", "Could not find a file ! Please cheack again.")
-    else: #if initilised then continue
-        mixer.music.unpause()
-        statusbar["text"] = "Resumed Music"+" | "+os.path.basename(filename)
 
 
 def rewind_music():
@@ -68,6 +66,7 @@ def rewind_music():
         tkinter.messagebox.showerror(
             "File not Found", "Could not find a file ! Please cheack again.")
 
+paused=FALSE
 
 def pause_music():
     global paused
@@ -102,15 +101,15 @@ def mute_music():
 midframe=Frame(root)
 midframe.pack(pady=30,padx=30)
 
-playPhoto = PhotoImage(file="play.png")
+playPhoto = PhotoImage(file="asset/play.png")
 playBtn = Button(midframe, image=playPhoto, command=play_music)
 playBtn.grid(row=0,column=0, padx=10)
 
-pausePhoto = PhotoImage(file="paused.png")
+pausePhoto = PhotoImage(file="asset/paused.png")
 pauseBtn = Button(midframe, image=pausePhoto, command=pause_music)
 pauseBtn.grid(row=0,column=1, padx=10)
 
-stopPhoto = PhotoImage(file="stop.png")
+stopPhoto = PhotoImage(file="asset/stop.png")
 stopBtn = Button(midframe, image=stopPhoto, command=stop_music)
 stopBtn.grid(row=0,column=2, padx=10)
 
@@ -119,12 +118,12 @@ stopBtn.grid(row=0,column=2, padx=10)
 bottomframe=Frame(root)
 bottomframe.pack(pady=10)
 
-rewindPhoto = PhotoImage(file="rewind.png")
+rewindPhoto = PhotoImage(file="asset/rewind.png")
 rewindBtn = Button(bottomframe, image=rewindPhoto, command=rewind_music)
 rewindBtn.grid(row=0,column=0)
 
-mutePhoto = PhotoImage(file="mute.png")
-volumePhoto = PhotoImage(file="volume.png")
+mutePhoto = PhotoImage(file="asset/mute.png")
+volumePhoto = PhotoImage(file="asset/volume.png")
 volumeBtn = Button(bottomframe, image=volumePhoto, command=mute_music)
 volumeBtn.grid(row=0,column=1,padx=10)
 
@@ -133,7 +132,7 @@ scale.set(75)  # set default volume
 mixer.music.set_volume(0.7)
 scale.grid(row=0,column=2,padx=30,pady=10)
 
-statusbar = Label(root,text="Welcome! to hemlite music Player",relief=SUNKEN, anchor=W)
+statusbar = Label(root,text="Welcome! to hemlite music Player | By:hraj9258",relief=SUNKEN, anchor=W)
 statusbar.pack(side=BOTTOM,fill=X)
 
 root.mainloop()
