@@ -2,14 +2,18 @@ import os
 from tkinter import *
 import tkinter.messagebox
 from tkinter import filedialog
-from tkinter import ttk
 from pygame import mixer
 import threading
 import time
 from mutagen.mp3 import MP3
 
+from tkinter import ttk
+from ttkthemes import themed_tk as tk
 
-root = Tk()
+
+root = tk.ThemedTk()
+root.get_themes()
+root.set_theme("radiance")
 
 # menubar
 menubar = Menu(root)
@@ -59,13 +63,13 @@ root.iconbitmap(r"icon.ico")
 
 #statusbar
 
-statusbar = Label(root,text="Welcome! to hemlite music Player | By:hraj9258",relief=SUNKEN, anchor=W)
+statusbar = Label(root,text="Welcome! to hemlite music Player | By:hraj9258",relief=SUNKEN, anchor=W, font="Times 10 italic")
 statusbar.pack(side=BOTTOM,fill=X)
 
 #left frame start from hear
 
 leftframe =  Frame(root)
-leftframe.pack(side=LEFT,padx=30)
+leftframe.pack(side=LEFT,padx=30,pady=30)
 
 playlistbox = Listbox(leftframe)# it just contain filename
 playlistbox.pack()
@@ -84,7 +88,7 @@ btn2.pack(side = LEFT)
 #rightframe starts from hear
 
 rightframe=Frame(root)
-rightframe.pack()
+rightframe.pack(pady=30)
 
 topframe= Frame(rightframe)
 topframe.pack()
