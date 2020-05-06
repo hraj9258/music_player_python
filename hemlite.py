@@ -14,18 +14,23 @@ root = Tk()
 menubar = Menu(root)
 root.config(menu=menubar)
 
+ # it contain the filename + full_path
+ # it contain only just filename
+ #full_path +file name is required to play the music inside "play_music" load function
+playlist=[]
 
 def browse_file():
-    global filename
-    filename = filedialog.askopenfilename()
-    print(filename)
-    filelabel["text"]="Opened : "+os.path.basename(filename)
-    add_to_playlist(filename)
+    global filename_path
+    filename_path = filedialog.askopenfilename()
+    #print(filename_path)
+    #filelabel["text"]="Opened : "+os.path.basename(filename_path)
+    add_to_playlist(filename_path)
 
-def add_to_playlist(f):
-    f = os.path.basename(f)
+def add_to_playlist(filename):
+    filename = os.path.basename(filename)
     index = 0
-    playlistbox.insert(index, f)
+    playlistbox.insert(index, filename)
+    playlist.insert(index, filename_path)
     index +=1
 
 
@@ -61,7 +66,7 @@ statusbar.pack(side=BOTTOM,fill=X)
 leftframe =  Frame(root)
 leftframe.pack(side=LEFT,padx=30)
 
-playlistbox = Listbox(leftframe)#playlist 
+playlistbox = Listbox(leftframe)# it just contain filename
 playlistbox.pack()
 
 btn1=Button(leftframe,text="+ ADD", command=browse_file)
@@ -87,15 +92,15 @@ currenttimelabel = Label(topframe, text="Current Time : --:--", relief = GROOVE)
 currenttimelabel.pack()
 
 def show_details():
-    filelabel["text"]="Playing : "+os.path.basename(filename)
+    filelabel["text"]="Playing : "+os.path.basename(filename_path)
 
-    file_data = os.path.splitext(filename)
+    file_data = os.path.splitext(filename_path)
     
     if file_data[1] == ".mp3":
-        audio = MP3(filename)
+        audio = MP3(filename_path)
         total_length = audio.info.length
     else:
-        a=mixer.Sound(filename)
+        a=mixer.Sound(filename_path)
         total_length=a.get_length()
 
     mins, secs = divmod(total_length,60)
@@ -127,14 +132,17 @@ def play_music():
 
     if paused:
         mixer.music.unpause()
-        statusbar["text"] = "Resumed Music"+" | "+os.path.basename(filename)
+        statusbar["text"] = "Resumed Music"+" | "+os.path.basename(filename_path)
         paused = FALSE
     else:
         try:
-            mixer.music.load(filename)
+            selected_song = playlistbox.curselection()
+            selected_song = int(selected_song[0])
+            play_it = playlist[selected_song]
+            mixer.music.load(play_it)
             mixer.music.play()
-            statusbar["text"] = "Playing Music"+" | "+os.path.basename(filename)
-            show_details()
+            #statusbar["text"] = "Playing Music"+" | "+os.path.basename(filename_path)
+            #show_details()
         except:
             tkinter.messagebox.showerror(
                 "File not Found", "Could not find a file ! Please cheack again.")
@@ -142,10 +150,10 @@ def play_music():
 
 def rewind_music():
     try:
-        mixer.music.load(filename)
+        mixer.music.load(filename_path)
         mixer.music.play()
-        statusbar["text"] = "Restarted Music"+" | "+os.path.basename(filename)
-        filelabel["text"]="Restarted : "+os.path.basename(filename)
+        statusbar["text"] = "Restarted Music"+" | "+os.path.basename(filename_path)
+        filelabel["text"]="Restarted : "+os.path.basename(filename_path)
     except:
         tkinter.messagebox.showerror(
             "File not Found", "Could not find a file ! Please cheack again.")
@@ -156,8 +164,8 @@ def pause_music():
     global paused
     paused = TRUE
     mixer.music.pause()
-    statusbar["text"] = "Paused Music"+" | "+os.path.basename(filename)
-    filelabel["text"] = "Paused : "+os.path.basename(filename)
+    statusbar["text"] = "Paused Music"+" | "+os.path.basename(filename_path)
+    filelabel["text"] = "Paused : "+os.path.basename(filename_path)
 
 def stop_music():
     mixer.music.stop()
@@ -179,13 +187,13 @@ def mute_music():
         volumeBtn.configure(image=volumePhoto)
         scale.set(75)
         muted=FALSE
-        statusbar["text"]="Unmuted : "+os.path.basename(filename)
+        statusbar["text"]="Unmuted : "+os.path.basename(filename_path)
     else:
         mixer.music.set_volume(0)
         volumeBtn.configure(image=mutePhoto)
         scale.set(0)
         muted=TRUE
-        statusbar["text"]="Muted : "+os.path.basename(filename)
+        statusbar["text"]="Muted : "+os.path.basename(filename_path)
 
 midframe=Frame(rightframe)
 midframe.pack(pady=30,padx=30)
