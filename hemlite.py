@@ -91,16 +91,16 @@ lengthlabel.pack(pady=5)
 currenttimelabel = Label(topframe, text="Current Time : --:--", relief = GROOVE)
 currenttimelabel.pack()
 
-def show_details():
-    filelabel["text"]="Playing : "+os.path.basename(filename_path)
+def show_details(play_song):
+    filelabel["text"]="Playing : "+os.path.basename(play_song)
 
-    file_data = os.path.splitext(filename_path)
+    file_data = os.path.splitext(play_song)
     
     if file_data[1] == ".mp3":
-        audio = MP3(filename_path)
+        audio = MP3(play_song)
         total_length = audio.info.length
     else:
-        a=mixer.Sound(filename_path)
+        a=mixer.Sound(play_song)
         total_length=a.get_length()
 
     mins, secs = divmod(total_length,60)
@@ -136,13 +136,15 @@ def play_music():
         paused = FALSE
     else:
         try:
+            stop_music()
+            time.sleep(1)
             selected_song = playlistbox.curselection()
             selected_song = int(selected_song[0])
             play_it = playlist[selected_song]
             mixer.music.load(play_it)
             mixer.music.play()
-            #statusbar["text"] = "Playing Music"+" | "+os.path.basename(filename_path)
-            #show_details()
+            statusbar["text"] = "Playing Music"+" | "+os.path.basename(play_it)
+            show_details(play_it)
         except:
             tkinter.messagebox.showerror(
                 "File not Found", "Could not find a file ! Please cheack again.")
