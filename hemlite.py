@@ -3,6 +3,7 @@ from tkinter import *
 import tkinter.messagebox
 from tkinter import filedialog
 from pygame import mixer
+from mutagen.mp3 import MP3
 
 
 root = Tk()
@@ -48,8 +49,14 @@ lengthlabel.pack(pady=10)
 def show_details():
     filelabel["text"]="Playing : "+os.path.basename(filename)
 
-    a=mixer.Sound(filename)
-    total_length=a.get_length()
+    file_data = os.path.splitext(filename)
+    
+    if file_data[1] == ".mp3":
+        audio = MP3(filename)
+        total_length = audio.info.length
+    else:
+        a=mixer.Sound(filename)
+        total_length=a.get_length()
 
     mins, secs=divmod(total_length,60)
     mins=round(mins)
@@ -88,11 +95,13 @@ def pause_music():
     paused = TRUE
     mixer.music.pause()
     statusbar["text"] = "Paused Music"+" | "+os.path.basename(filename)
+    filelabel["text"] = "Paused : "+os.path.basename(filename)
 
 def stop_music():
     mixer.music.stop()
     statusbar["text"] = "Stoped Music"
-
+    filelabel["text"] = "Lets! Make some noise."
+    lengthlabel["text"] = "Total Length : --:--"
 
 def set_vol(val):
     volume = int(val) / 100
