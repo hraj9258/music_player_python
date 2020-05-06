@@ -43,13 +43,40 @@ mixer.init()  # initializing the mixer
 root.title("Melody")
 root.iconbitmap(r"icon.ico")
 
-filelabel = Label(root, text="Lets! Make some noise.")
+#statusbar
+
+statusbar = Label(root,text="Welcome! to hemlite music Player | By:hraj9258",relief=SUNKEN, anchor=W)
+statusbar.pack(side=BOTTOM,fill=X)
+
+#left frame start from hear
+
+leftframe =  Frame(root)
+leftframe.pack(side=LEFT,padx=30)
+
+lb1 = Listbox(leftframe)
+lb1.insert(0,"song1")
+lb1.insert(1,"song2")
+lb1.pack()
+
+btn1=Button(leftframe,text="+ ADD")
+btn1.pack(side = LEFT)
+btn2=Button(leftframe,text="- DEL")
+btn2.pack(side = LEFT)
+#rightframe starts from hear
+
+rightframe=Frame(root)
+rightframe.pack()
+
+topframe= Frame(rightframe)
+topframe.pack()
+
+filelabel = Label(topframe, text="Lets! Make some noise.")
 filelabel.pack()
 
-lengthlabel = Label(root, text="Total Length : --:--")
+lengthlabel = Label(topframe, text="Total Length : --:--")
 lengthlabel.pack(pady=5)
 
-currenttimelabel = Label(root, text="Current Time : --:--", relief = GROOVE)
+currenttimelabel = Label(topframe, text="Current Time : --:--", relief = GROOVE)
 currenttimelabel.pack()
 
 def show_details():
@@ -153,7 +180,7 @@ def mute_music():
         muted=TRUE
         statusbar["text"]="Muted : "+os.path.basename(filename)
 
-midframe=Frame(root)
+midframe=Frame(rightframe)
 midframe.pack(pady=30,padx=30)
 
 playPhoto = PhotoImage(file="asset/play.png")
@@ -170,7 +197,7 @@ stopBtn.grid(row=0,column=2, padx=10)
 
 #bottom frame for rewind, mute and scale
 
-bottomframe=Frame(root)
+bottomframe=Frame(rightframe)
 bottomframe.pack(pady=10)
 
 rewindPhoto = PhotoImage(file="asset/rewind.png")
@@ -187,8 +214,6 @@ scale.set(75)  # set default volume
 mixer.music.set_volume(0.7)
 scale.grid(row=0,column=2,padx=30,pady=10)
 
-statusbar = Label(root,text="Welcome! to hemlite music Player | By:hraj9258",relief=SUNKEN, anchor=W)
-statusbar.pack(side=BOTTOM,fill=X)
 
 def root_exit():
     stop_music()
