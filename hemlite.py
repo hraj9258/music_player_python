@@ -3,6 +3,8 @@ from tkinter import *
 import tkinter.messagebox
 from tkinter import filedialog
 from pygame import mixer
+import threading
+import time
 from mutagen.mp3 import MP3
 
 
@@ -45,7 +47,10 @@ filelabel = Label(root, text="Lets! Make some noise.")
 filelabel.pack()
 
 lengthlabel = Label(root, text="Total Length : --:--")
-lengthlabel.pack(pady=10)
+lengthlabel.pack(pady=5)
+
+currenttimelabel = Label(root, text="Current Time : --:--", relief = GROOVE)
+currenttimelabel.pack()
 
 def show_details():
     filelabel["text"]="Playing : "+os.path.basename(filename)
@@ -59,16 +64,37 @@ def show_details():
         a=mixer.Sound(filename)
         total_length=a.get_length()
 
-    mins, secs=divmod(total_length,60)
-    mins=round(mins)
-    secs=round(secs)
-    timeformat="{:02d}:{:02d}".format(mins,secs)
-    lengthlabel["text"]="Total Length : "+timeformat
+    mins, secs = divmod(total_length,60)
+    mins = round(mins)
+    secs = round(secs)
+    timeformat = "{:02d}:{:02d}".format(mins,secs)
+    lengthlabel["text"] = "Total Length : "+timeformat
+
+    t1 = threading.Thread(target=start_count, args = (total_length,))
+    t1.start()
+
+def start_count(t):
+    global paused
+    x = 0
+    while x <= t and mixer.music.get_busy():
+        if paused:
+            continue
+        else:
+            mins, secs = divmod(x,60)
+            mins = round(mins)
+            secs = round(secs)
+            timeformat = "{:02d}:{:02d}".format(mins,secs)
+            currenttimelabel["text"] = "Current Time : "+timeformat
+            time.sleep(1)
+            x += 1
 
 def play_music():
+    global paused
+
     if paused:
         mixer.music.unpause()
         statusbar["text"] = "Resumed Music"+" | "+os.path.basename(filename)
+        paused = FALSE
     else:
         try:
             mixer.music.load(filename)
@@ -104,6 +130,7 @@ def stop_music():
     statusbar["text"] = "Stoped Music"
     filelabel["text"] = "Lets! Make some noise."
     lengthlabel["text"] = "Total Length : --:--"
+    currenttimelabel["text"] = "Current Time : --:--"
 
 def set_vol(val):
     volume = int(val) / 100
