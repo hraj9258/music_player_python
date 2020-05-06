@@ -72,7 +72,13 @@ playlistbox.pack()
 btn1=Button(leftframe,text="+ ADD", command=browse_file)
 btn1.pack(side = LEFT)
 
-btn2=Button(leftframe,text="- DEL")
+def del_song():
+    selected_song = playlistbox.curselection()
+    selected_song = int(selected_song[0])
+    playlistbox.delete(selected_song)
+    playlist.pop(selected_song)
+
+btn2=Button(leftframe,text="- DEL", command=del_song)
 btn2.pack(side = LEFT)
 #rightframe starts from hear
 
