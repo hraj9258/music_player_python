@@ -75,18 +75,18 @@ def show_details():
 
 def start_count(t):
     global paused
-    x = 0
-    while x <= t and mixer.music.get_busy():
+    current_time = 0
+    while current_time <= t and mixer.music.get_busy():
         if paused:
             continue
         else:
-            mins, secs = divmod(x,60)
+            mins, secs = divmod(current_time,60)
             mins = round(mins)
             secs = round(secs)
             timeformat = "{:02d}:{:02d}".format(mins,secs)
             currenttimelabel["text"] = "Current Time : "+timeformat
             time.sleep(1)
-            x += 1
+            current_time += 1
 
 def play_music():
     global paused
@@ -190,4 +190,9 @@ scale.grid(row=0,column=2,padx=30,pady=10)
 statusbar = Label(root,text="Welcome! to hemlite music Player | By:hraj9258",relief=SUNKEN, anchor=W)
 statusbar.pack(side=BOTTOM,fill=X)
 
+def root_exit():
+    stop_music()
+    root.destroy()
+
+root.protocol("WM_DELETE_WINDOW",root_exit)
 root.mainloop()
