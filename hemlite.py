@@ -14,14 +14,22 @@ root = Tk()
 menubar = Menu(root)
 root.config(menu=menubar)
 
-# submenu
 
 def browse_file():
     global filename
     filename = filedialog.askopenfilename()
     print(filename)
     filelabel["text"]="Opened : "+os.path.basename(filename)
+    add_to_playlist(filename)
 
+def add_to_playlist(f):
+    f = os.path.basename(f)
+    index = 0
+    playlistbox.insert(index, f)
+    index +=1
+
+
+# submenu
 
 submenu = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="File", menu=submenu)
@@ -53,13 +61,12 @@ statusbar.pack(side=BOTTOM,fill=X)
 leftframe =  Frame(root)
 leftframe.pack(side=LEFT,padx=30)
 
-lb1 = Listbox(leftframe)
-lb1.insert(0,"song1")
-lb1.insert(1,"song2")
-lb1.pack()
+playlistbox = Listbox(leftframe)#playlist 
+playlistbox.pack()
 
-btn1=Button(leftframe,text="+ ADD")
+btn1=Button(leftframe,text="+ ADD", command=browse_file)
 btn1.pack(side = LEFT)
+
 btn2=Button(leftframe,text="- DEL")
 btn2.pack(side = LEFT)
 #rightframe starts from hear
