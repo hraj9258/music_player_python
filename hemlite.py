@@ -18,6 +18,7 @@ def browse_file():
     global filename
     filename = filedialog.askopenfilename()
     print(filename)
+    filelabel["text"]="Opened : "+os.path.basename(filename)
 
 
 submenu = Menu(menubar, tearoff=0)
@@ -84,6 +85,7 @@ def rewind_music():
         mixer.music.load(filename)
         mixer.music.play()
         statusbar["text"] = "Restarted Music"+" | "+os.path.basename(filename)
+        filelabel["text"]="Restarted : "+os.path.basename(filename)
     except:
         tkinter.messagebox.showerror(
             "File not Found", "Could not find a file ! Please cheack again.")
@@ -116,11 +118,13 @@ def mute_music():
         volumeBtn.configure(image=volumePhoto)
         scale.set(75)
         muted=FALSE
+        statusbar["text"]="Unmuted : "+os.path.basename(filename)
     else:
         mixer.music.set_volume(0)
         volumeBtn.configure(image=mutePhoto)
         scale.set(0)
         muted=TRUE
+        statusbar["text"]="Muted : "+os.path.basename(filename)
 
 midframe=Frame(root)
 midframe.pack(pady=30,padx=30)
