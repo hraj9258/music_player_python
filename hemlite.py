@@ -2,6 +2,7 @@ import os
 from tkinter import *
 import tkinter.messagebox
 from tkinter import filedialog
+from tkinter import ttk
 from pygame import mixer
 import threading
 import time
@@ -69,7 +70,7 @@ leftframe.pack(side=LEFT,padx=30)
 playlistbox = Listbox(leftframe)# it just contain filename
 playlistbox.pack()
 
-btn1=Button(leftframe,text="+ ADD", command=browse_file)
+btn1=ttk.Button(leftframe,text="+ ADD", command=browse_file)
 btn1.pack(side = LEFT)
 
 def del_song():
@@ -78,7 +79,7 @@ def del_song():
     playlistbox.delete(selected_song)
     playlist.pop(selected_song)
 
-btn2=Button(leftframe,text="- DEL", command=del_song)
+btn2=ttk.Button(leftframe,text="- DEL", command=del_song)
 btn2.pack(side = LEFT)
 #rightframe starts from hear
 
@@ -88,13 +89,13 @@ rightframe.pack()
 topframe= Frame(rightframe)
 topframe.pack()
 
-filelabel = Label(topframe, text="Lets! Make some noise.")
+filelabel = ttk.Label(topframe, text="Lets! Make some noise.")
 filelabel.pack()
 
-lengthlabel = Label(topframe, text="Total Length : --:--")
+lengthlabel = ttk.Label(topframe, text="Total Length : --:--")
 lengthlabel.pack(pady=5)
 
-currenttimelabel = Label(topframe, text="Current Time : --:--", relief = GROOVE)
+currenttimelabel = ttk.Label(topframe, text="Current Time : --:--", relief = GROOVE)
 currenttimelabel.pack()
 
 def show_details(play_song):
@@ -183,7 +184,7 @@ def stop_music():
     currenttimelabel["text"] = "Current Time : --:--"
 
 def set_vol(val):
-    volume = int(val) / 100
+    volume = float(val) / 100
     mixer.music.set_volume(volume)
 
 muted=FALSE
@@ -207,15 +208,15 @@ midframe=Frame(rightframe)
 midframe.pack(pady=30,padx=30)
 
 playPhoto = PhotoImage(file="asset/play.png")
-playBtn = Button(midframe, image=playPhoto, command=play_music)
+playBtn = ttk.Button(midframe, image=playPhoto, command=play_music)
 playBtn.grid(row=0,column=0, padx=10)
 
 pausePhoto = PhotoImage(file="asset/paused.png")
-pauseBtn = Button(midframe, image=pausePhoto, command=pause_music)
+pauseBtn = ttk.Button(midframe, image=pausePhoto, command=pause_music)
 pauseBtn.grid(row=0,column=1, padx=10)
 
 stopPhoto = PhotoImage(file="asset/stop.png")
-stopBtn = Button(midframe, image=stopPhoto, command=stop_music)
+stopBtn = ttk.Button(midframe, image=stopPhoto, command=stop_music)
 stopBtn.grid(row=0,column=2, padx=10)
 
 #bottom frame for rewind, mute and scale
@@ -224,15 +225,15 @@ bottomframe=Frame(rightframe)
 bottomframe.pack(pady=10)
 
 rewindPhoto = PhotoImage(file="asset/rewind.png")
-rewindBtn = Button(bottomframe, image=rewindPhoto, command=rewind_music)
+rewindBtn = ttk.Button(bottomframe, image=rewindPhoto, command=rewind_music)
 rewindBtn.grid(row=0,column=0)
 
 mutePhoto = PhotoImage(file="asset/mute.png")
 volumePhoto = PhotoImage(file="asset/volume.png")
-volumeBtn = Button(bottomframe, image=volumePhoto, command=mute_music)
+volumeBtn = ttk.Button(bottomframe, image=volumePhoto, command=mute_music)
 volumeBtn.grid(row=0,column=1,padx=10)
 
-scale = Scale(bottomframe, from_=0, to=100, orient=HORIZONTAL, command=set_vol)
+scale = ttk.Scale(bottomframe, from_=0, to=100, orient=HORIZONTAL, command=set_vol)
 scale.set(75)  # set default volume
 mixer.music.set_volume(0.7)
 scale.grid(row=0,column=2,padx=30,pady=10)
