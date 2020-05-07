@@ -19,8 +19,8 @@ root.set_theme("radiance")
 menubar = Menu(root)
 root.config(menu=menubar)
 
- # it contain the filename + full_path
- # it contain only just filename
+ #filename_path: it contain the filename + full_path
+ #filename : it contain only just filename
  #full_path +file name is required to play the music inside "play_music" load function
 playlist=[]
 
@@ -155,7 +155,7 @@ def play_music():
             mixer.music.load(play_it)
             mixer.music.play()
             statusbar["text"] = "Playing Music"+" | "+os.path.basename(play_it)
-            show_details(play_it)
+            show_details(play_it)           
         except:
             tkinter.messagebox.showerror(
                 "File not Found", "Could not find a file ! Please cheack again.")
@@ -212,15 +212,15 @@ midframe=Frame(rightframe)
 midframe.pack(pady=30,padx=30)
 
 playPhoto = PhotoImage(file="asset/play.png")
-playBtn = ttk.Button(midframe, image=playPhoto, command=play_music)
+playBtn = Button(midframe, image=playPhoto, command=play_music,height=65,width=65,border="0")
 playBtn.grid(row=0,column=0, padx=10)
 
 pausePhoto = PhotoImage(file="asset/paused.png")
-pauseBtn = ttk.Button(midframe, image=pausePhoto, command=pause_music)
+pauseBtn = Button(midframe, image=pausePhoto, command=pause_music,height=65,width=65,border="0")
 pauseBtn.grid(row=0,column=1, padx=10)
 
 stopPhoto = PhotoImage(file="asset/stop.png")
-stopBtn = ttk.Button(midframe, image=stopPhoto, command=stop_music)
+stopBtn = Button(midframe, image=stopPhoto, command=stop_music,height=65,width=65,border="0")
 stopBtn.grid(row=0,column=2, padx=10)
 
 #bottom frame for rewind, mute and scale
